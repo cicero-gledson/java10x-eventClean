@@ -16,4 +16,5 @@ spring:
 
   flyway:
     enabled: true
-
+    locations: classpath:db/migration
+    # linha desnecessária, pois o Flyway já procura por padrão em classpath:db/migration

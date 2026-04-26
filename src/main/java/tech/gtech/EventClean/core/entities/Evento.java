@@ -11,7 +11,8 @@ public record Evento(
         String identificador,
         LocalDateTime dataHoraInicio,
         LocalDateTime dataHoraFim,
-        String local,
+        String localEvento,
+        Integer capacidade,
         String organizador,
         TipoVento tipo
 ) {
