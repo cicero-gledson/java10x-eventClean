@@ -2,6 +2,7 @@ package tech.gtech.EventClean.infrastructure.persistence;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import tech.gtech.EventClean.core.enums.TipoVento;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Builder
 public class EventoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
