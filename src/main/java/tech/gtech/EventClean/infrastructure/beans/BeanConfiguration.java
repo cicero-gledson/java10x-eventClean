@@ -22,5 +22,9 @@ public class BeanConfiguration {
         return new BuscarTodosEventoCaseImpl(eventoGateway);
     }
 
+    @Bean
+    public BuscarIdentificadorEventoCase buscarIdentificadorEventoCase(EventoGateway  eventoGateway) {
+        return new BuscarIdentificadorEventoCaseImpl(eventoGateway);
+    }
 
 }

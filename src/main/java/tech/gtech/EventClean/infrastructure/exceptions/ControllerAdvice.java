@@ -1,28 +1,49 @@
 package tech.gtech.EventClean.infrastructure.exceptions;
 
-import org.springframework.dao.DataIntegrityViolationException;
+import jakarta.servlet.http.HttpServletRequest;
+import org.jspecify.annotations.NonNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import tech.gtech.EventClean.core.exceptions.DuplicateIdentificadorEventoException;
+import tech.gtech.EventClean.core.exceptions.EventoNaoEncontradoException;
 
-import java.util.HashMap;
+import java.time.Instant;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.SequencedMap;
 
 @RestControllerAdvice
 public class ControllerAdvice {
-    @ExceptionHandler(DataIntegrityViolationException.class)
+    
+    @ExceptionHandler(DuplicateIdentificadorEventoException.class)
+    public ResponseEntity<ErroDTO> handleDataIntegrityViolationException
+            (DuplicateIdentificadorEventoException ex, HttpServletRequest request) {
 
-    public ResponseEntity<Map<String, String>> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
-        Map<String, String> response = new LinkedHashMap<>();
-        response.put("Mensagem", "Erro na requisição");
-        if (ex.getMessage().contains("eventos_identificador_key")) {
-           response.put("Detalhes", "O identificador do evento deve ser único. O valor fornecido já existe.");
-           return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        HttpStatus status = HttpStatus.CONFLICT;
+        ErroDTO erroDTO = getDto(status, ex.getMessage(), request);
+
+        return ResponseEntity.status(status).body(erroDTO);
     }
+    
+    @ExceptionHandler(EventoNaoEncontradoException.class)
+    public ResponseEntity<ErroDTO> handleEventoNaoEncontradoException
+            (EventoNaoEncontradoException ex, HttpServletRequest request) {
+
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        ErroDTO erroDTO = getDto(status, ex.getMessage(), request);
+
+        return ResponseEntity.status(status).body(erroDTO);
+    }
+
+    private static ErroDTO getDto(HttpStatus status, String exMensagem, HttpServletRequest request) {
+
+        return new ErroDTO(
+                Instant.now(),
+                status.value(),
+                status.getReasonPhrase(),
+                exMensagem,
+                request.getRequestURI());
+    }
+
 }

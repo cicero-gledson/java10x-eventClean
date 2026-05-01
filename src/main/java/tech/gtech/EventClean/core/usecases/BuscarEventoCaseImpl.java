@@ -1,6 +1,7 @@
 package tech.gtech.EventClean.core.usecases;
 
 import tech.gtech.EventClean.core.entities.Evento;
+import tech.gtech.EventClean.core.exceptions.EventoNaoEncontradoException;
 import tech.gtech.EventClean.core.gateway.EventoGateway;
 
 public class BuscarEventoCaseImpl implements BuscarEventoCase {
@@ -13,6 +14,8 @@ public class BuscarEventoCaseImpl implements BuscarEventoCase {
 
     @Override
     public Evento execute(Long id) {
-        return eventoGateway.buscarEvento(id);
+        return eventoGateway.buscarEvento(id).orElseThrow(
+                () -> new EventoNaoEncontradoException("O evento com id "+id+" não foi encontrado")
+        );
     }
 }

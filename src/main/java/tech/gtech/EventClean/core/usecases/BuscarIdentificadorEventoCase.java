@@ -2,6 +2,6 @@ package tech.gtech.EventClean.core.usecases;
 
 import tech.gtech.EventClean.core.entities.Evento;
 
-public interface BuscarEventoCase {
-    Evento execute(Long id);
+public interface BuscarIdentificadorEventoCase {
+    Evento execute(String identificador);
 }
