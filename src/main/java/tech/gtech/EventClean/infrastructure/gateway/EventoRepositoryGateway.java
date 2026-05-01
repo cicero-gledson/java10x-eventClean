@@ -26,8 +26,6 @@ public class EventoRepositoryGateway implements EventoGateway {
     public Evento criarEvento(Evento evento) {
         EventoEntity eventoEntity = EventoEntityMapper.toEventoEntity(evento);
 
-        while (identificadorEventoExiste(eventoEntity.gerarIdentificador()));
-
         eventoEntity = eventoRepository.save(eventoEntity);
 
         return EventoEntityMapper.toDomain(eventoEntity);

@@ -39,6 +39,7 @@ public class EventoController {
     public ResponseEntity<Map<String, Object>> criarEvento(@RequestBody EventoDTO evento) {
 
         Evento novoEvento =  criarEventoCase.execute(EventoMapper.toEntity(evento));
+
         EventoDTO novoEventoDto = EventoMapper.toDto(novoEvento);
         Map<String, Object> response = new HashMap<>();
         response.put("Mensagem", "Evento criado com sucesso");

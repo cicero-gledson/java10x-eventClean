@@ -31,12 +31,5 @@ public class EventoEntity {
     @Enumerated(EnumType.STRING)
     private TipoVento tipo;
 
-    public String gerarIdentificador() {
-        Random random = new Random();
-        int parteNumerica = random.nextInt(10000);
-        char letra1 = (char) (random.nextInt(26) + 'A');
-        char letra2 = (char) (random.nextInt(26) + 'A');
-        this.identificador = ""+ letra1+letra2+String.format("%04d", parteNumerica);
-        return this.identificador;
-    }
+
 }
